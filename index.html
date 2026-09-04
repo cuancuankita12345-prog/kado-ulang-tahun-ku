@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kado Digital Special</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background: #fff0f3; color: #590d22; text-align: center; display: flex; justify-content: center; min-height: 100vh; }
+    .card-container { width: 100%; max-width: 420px; background: #fff; min-height: 100vh; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+    
+    /* Section Steps */
+    .step { display: none; padding: 30px 20px; height: 100vh; flex-direction: column; justify-content: center; align-items: center; }
+    .step.active { display: flex; }
+
+    /* Lock Screen */
+    input[type="password"] { padding: 12px; font-size: 18px; text-align: center; border: 2px solid #ffb3c1; border-radius: 8px; margin: 15px 0; outline: none; width: 80%; }
+    button { background: #ff4d6d; color: white; border: none; padding: 12px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #c9184a; }
+
+    /* Gallery / Media */
+    .photo-frame { width: 100%; height: 250px; background: #ffe5ec; border-radius: 12px; margin: 20px 0; background-size: cover; background-position: center; }
+    .letter-text { font-size: 15px; line-height: 1.6; text-align: left; background: #fff0f3; padding: 15px; border-radius: 8px; margin-top: 15px; }
+  </style>
+</head>
+<body>
+
+<div class="card-container">
+  <!-- Audio Background -->
+  <audio id="bg-music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Step 1: Lock Screen -->
+  <div class="step active" id="step-1">
+    <h2>🔒 Pintu Rahasia</h2>
+    <p>Masukkan tanggal jadian / PIN khusus:</p>
+    <input type="password" id="pin-input" placeholder="Masukkan PIN (e.g. 1234)">
+    <button onclick="checkPin()">Buka Kado ✨</button>
+    <p id="error-msg" style="color:red; font-size: 12px; margin-top: 8px;"></p>
+  </div>
+
+  <!-- Step 2: Intro / Story -->
+  <div class="step" id="step-2">
+    <h2>Selamat Ulang Tahun! 🎉</h2>
+    <div class="photo-frame" style="background-image: url('https://via.placeholder.com/400x300');"></div>
+    <p>Setiap detik bersamamu adalah cerita terbaik...</p>
+    <button onclick="nextStep(3)" style="margin-top: 20px;">Lanjut ➡️</button>
+  </div>
+
+  <!-- Step 3: Surat & Penutup -->
+  <div class="step" id="step-3">
+    <h2>💌 Pesan Untukmu</h2>
+    <div class="letter-text">
+      Terima kasih sudah menjadi bagian terindah dalam perjalanan ini. Semoga di usiamu yang baru, semua impianmu bisa terwujud satu per satu.
+    </div>
+    <button onclick="alert('❤️ Terima kasih sudah membuka!')" style="margin-top: 20px;">Selesai</button>
+  </div>
+</div>
+
+<script>
+  const CORRECT_PIN = "1234"; // Ganti PIN sesuai keinginan
+
+  function checkPin() {
+    const input = document.getElementById('pin-input').value;
+    if (input === CORRECT_PIN) {
+      document.getElementById('bg-music').play(); // Putar musik otomatis setelah unlock
+      nextStep(2);
+    } else {
+      document.getElementById('error-msg').innerText = "PIN salah, coba lagi!";
+    }
+  }
+
+  function nextStep(stepNumber) {
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    document.getElementById(`step-${stepNumber}`).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
